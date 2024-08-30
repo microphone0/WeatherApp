@@ -83,10 +83,10 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, UISearchB
         locationLabel.text = forecast.cityStateOrCurrentLocation
         weatherDescLabel.text = forecast.weather[0].secondaryDesc
         if let temp = forecast.main.currentTemp {
-            tempAndStatusLabel.text = "\(temp)° \(forecast.weather[0].mainDesc)"
+            tempAndStatusLabel.text = "\(temp)°F \(forecast.weather[0].mainDesc)"
         }
         if let feelsLike = forecast.main.feelsLike {
-            feelsLikeLabel.text = "\(feelsLike)°"
+            feelsLikeLabel.text = "\(feelsLike)°F"
         }
         if let imageData = forecast.image {
             imageLabel.image = UIImage(data: imageData)

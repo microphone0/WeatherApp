@@ -25,7 +25,7 @@ final class WeatherTests: XCTestCase {
 
     func testImageFetcherEmptyStringInput() async throws {
         do {
-            let image = try await imageFetcher.imageFetcher(imageName:"")
+            let _ = try await imageFetcher.imageFetcher(imageName:"")
             XCTAssert(false)
         } catch ErrorWithData.retrievingImageFromURL {
             XCTAssert(true)
@@ -36,7 +36,7 @@ final class WeatherTests: XCTestCase {
 
     func testDataFetcherEmptyStringInput() async throws {
         do {
-            let data = try await dataFetcher.getWeatherData(location: "")
+            let _ = try await dataFetcher.getWeatherData(location: "")
             XCTAssert(false)
         } catch ErrorWithData.retrievingData {
             XCTAssert(true)

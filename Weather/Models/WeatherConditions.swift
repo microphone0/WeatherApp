@@ -10,6 +10,7 @@ import Foundation
 // Define structs for weather conditions that might be in a Forecast
 // Separeted these structs from the rest for readabily sake
 struct Weather: Codable {
+    let uniqueID = UUID()
     let id: Int
     let mainDesc: String
     let secondaryDesc: String
