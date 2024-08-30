@@ -9,6 +9,22 @@ import Foundation
 
 // Define structs for weather conditions that might be in a Forecast
 // Separeted these structs from the rest for readabily sake
+struct Weather: Codable {
+    let uniqueID = UUID()
+    let id: Int
+    let mainDesc: String
+    let secondaryDesc: String
+    let iconImageNumber: String
+    
+    enum CodingKeys: String, CodingKey {
+        case mainDesc = "main"
+        case secondaryDesc = "description"
+        case iconImageNumber = "icon"
+        
+        case id
+    }
+}
+
 struct Wind: Codable {
     let speed: Float?
     let deg: Int?
@@ -23,6 +39,7 @@ struct Rain: Codable {
     let oneHour: Float?
     let threeHours: Float?
     
+    // Variables can't have a number in them, so have to create custom keys
     enum CodingKeys: String, CodingKey {
         case oneHour = "1h"
         case threeHours = "3h"
@@ -33,6 +50,7 @@ struct Snow: Codable {
     let oneHour: Float?
     let threeHours: Float?
     
+    // Variables can't have a number in them, so have to create custom keys
     enum CodingKeys: String, CodingKey {
         case oneHour = "1h"
         case threeHours = "3h"
@@ -40,22 +58,24 @@ struct Snow: Codable {
 }
 
 struct OtherWeatherConditions: Codable {
-    let actualTemp: Float?
+    let currentTemp: Float?
     let feelsLike: Float?
     let tempMin: Float?
     let tempMax: Float?
     let pressure: Int?
     let humidity: Int?
-    let atmPressureSea: Int?
-    let atmPressureGround: Int?
+    let atmPSea: Int?
+    let atmPGround: Int?
     
+    // Create custom keys to have better names
     enum CodingKeys: String, CodingKey {
-        case actualTemp = "temp"
+        case currentTemp = "temp"
         case feelsLike = "feels_like"
         case tempMin = "temp_min"
         case tempMax = "temp_max"
-        case atmPressureSea = "sea_level"
-        case atmPressureGround = "grnd_level"
+        // atm and P are abbreviations for atmospheric pressure and API that's what these values are
+        case atmPSea = "sea_level"
+        case atmPGround = "grnd_level"
         
         case humidity, pressure
     }
