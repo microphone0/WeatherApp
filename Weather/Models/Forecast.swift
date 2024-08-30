@@ -5,6 +5,9 @@
 //  Created by Adam Saxton on 8/28/24.
 //
 
+// TODO: Maybe look into changing some names to be more clearer
+// TODO: Look into possibly removing some of the properties that we will never use if we can still decode the JSON well enough
+
 import Foundation
 import UIKit
 

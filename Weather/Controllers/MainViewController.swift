@@ -5,12 +5,17 @@
 //  Created by Adam Saxton on 8/28/24.
 //
 
+// TODO: Optimize some of the logic better and maybe separate some of the functions
+// TODO: Handle Errors with user mispelled something or formatted the text wrong
+
 import UIKit
 import CoreLocation
+import SwiftUI
 
 class MainViewController: UIViewController, CLLocationManagerDelegate, UISearchBarDelegate {
 
     @IBOutlet var searchBar: UISearchBar!
+    @IBOutlet var detailsButton: UIButton!
     
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var tempAndStatusLabel: UILabel!
@@ -23,10 +28,8 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, UISearchB
     
     var forecast: Forecast?
     
-    required init?(coder: NSCoder) {
-        forecast = nil
-        super.init(coder: coder)
-    }
+    // Needed to display alert from viewDidAppear from do catch in viewDidLoad but can't present alert in viewDidLoad
+    private var errorSettingUpData = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +40,9 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, UISearchB
         locationManager?.requestWhenInUseAuthorization()
         
         searchBar.delegate = self
+        
+        // Hide the button if forecast is nil
+        detailsButton.isHidden = true
         
         // Pull up the last place searched (if any) on start up and displays the latest forecast otherwise just display nothing
         if let data = UserDefaults.standard.data(forKey: "weatherAppLastLocation") {
@@ -54,16 +60,26 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, UISearchB
                     fetchWeatherData(location: "q=\(weatherForecastCityState),US")
                 }
             } catch {
-                fatalError("Error Decoding data")
+                errorSettingUpData = true
             }
         } else {
             updateView()
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        if errorSettingUpData {
+            let alert = ErrorAlertController().showErrorAlertWithMessage(title: "Something went wrong", message: "Unable to get last location's forecast from previous session.")
+            present(alert, animated: true, completion: nil)
+            errorSettingUpData = false
+        }
+    }
+    
     func updateView() {
         // Try to unwrap optional values if it's nil then just leave label blank
         guard let forecast = forecast else { return }
+        // Since forecast is not nil we can show button
+        detailsButton.isHidden = false
         locationLabel.text = forecast.cityStateOrCurrentLocation
         weatherDescLabel.text = forecast.weather[0].secondaryDesc
         if let temp = forecast.main.currentTemp {
@@ -102,17 +118,23 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, UISearchB
                 } else {
                     self.forecast?.cityStateOrCurrentLocation = "Current Location"
                 }
-                guard let forecast = self.forecast else { fatalError("Error getting forecast") }
+                guard let forecast = self.forecast else { throw ErrorWithData.retrievingData }
                 // Saves data for when user closes the app so it can gives last location's info on app launch
                 try DataFetcher().saveLastLocation(forecast: forecast)
             } catch {
-                fatalError("Error getting data")
+                let alert = ErrorAlertController().showErrorAlertWithMessage(title: "Oops something went wrong", message: "Please, try again and if problem still persists try restarting the app.")
+                present(alert, animated: true, completion: nil)
             }
             updateView()
         }
     }
     
-/// Delegate Methods
+    // Create segue to the details view which is a SwiftUI View
+    @IBSegueAction func segueToSwiftUIView(_ coder: NSCoder) -> UIViewController? {
+        return UIHostingController(coder: coder, rootView: DetailWeatherView(forecast: forecast!))
+    }
+    
+    /// Delegate Methods
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         // Always run when app starts as well and if user allowed location use then the app will automatically display current location forecast
         if manager.authorizationStatus == .authorizedWhenInUse {

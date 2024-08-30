@@ -17,7 +17,7 @@ class ImageFetcher {
     
     func imageFetcher(imageName: String) async throws -> Data {
         
-        guard let url = URL(string: "https://openweathermap.org/img/wn/\(imageName)@2x.png") else { fatalError("Missing Image Name") }
+        guard let url = URL(string: "https://openweathermap.org/img/wn/\(imageName)@2x.png") else { throw ErrorWithData.makingImageURL }
         
         // See if image exists is cache and get the data from it if it does
         if let imageFromCache = imageCache.object(forKey: url as AnyObject) as? Data {
@@ -29,7 +29,7 @@ class ImageFetcher {
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        guard (response as? HTTPURLResponse)?.statusCode == 200 else { fatalError("Error fetching image") }
+        guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw ErrorWithData.retrievingImageFromURL }
         
         imageCache.setObject(data as AnyObject, forKey: url as AnyObject)
         
