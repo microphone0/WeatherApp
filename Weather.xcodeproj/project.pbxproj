@@ -48,11 +48,11 @@
 		B55272922C809E6B00F5D285 /* LocationAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAlertController.swift; sourceTree = "<group>"; };
 		B55272962C80B14A00F5D285 /* DataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DataFetcher.swift; path = Weather/Fetchers/DataFetcher.swift; sourceTree = SOURCE_ROOT; };
 		B55272982C81681000F5D285 /* ImageFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageFetcher.swift; path = Weather/Fetchers/ImageFetcher.swift; sourceTree = SOURCE_ROOT; };
-		B552729C2C819B1300F5D285 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = SOURCE_ROOT; };
-		B552729E2C81A9DD00F5D285 /* ErrorAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlertController.swift; sourceTree = SOURCE_ROOT; };
+		B552729C2C819B1300F5D285 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Error.swift; path = Weather/Error.swift; sourceTree = SOURCE_ROOT; };
+		B552729E2C81A9DD00F5D285 /* ErrorAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ErrorAlertController.swift; path = Weather/Controllers/ErrorAlertController.swift; sourceTree = SOURCE_ROOT; };
 		B55272A62C81B16F00F5D285 /* WeatherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B55272A82C81B16F00F5D285 /* WeatherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTests.swift; sourceTree = "<group>"; };
-		B55272B12C81C82300F5D285 /* DetailWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWeatherView.swift; sourceTree = SOURCE_ROOT; };
+		B55272B12C81C82300F5D285 /* DetailWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DetailWeatherView.swift; path = Weather/DetailWeatherView.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
